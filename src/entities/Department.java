@@ -6,13 +6,13 @@ import java.util.Objects;
 public class Department implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String name;
 	
 	public Department() {
 	}
 	
-	public Department(String name, int id) {
+	public Department(String name, Integer id) {
 		this.name = name;
 		this.id = id;
 	}
@@ -21,7 +21,7 @@ public class Department implements Serializable {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
