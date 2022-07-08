@@ -1,8 +1,11 @@
 package application;
 
+import java.util.Date;
+
 import dao.DaoFactory;
 import dao.SellerDao;
 import entities.Department;
+import entities.Seller;
 
 public class Program {
 
@@ -19,9 +22,13 @@ public class Program {
 		sellerDao.findByDepartment(department).stream().forEach(System.out::println);
 		System.out.println();
 		
+		System.out.println("--Insert--");
+		sellerDao.insert(new Seller(null, "Jorje", "Jorje@gmail.com", new Date(), 3500.0, new Department(null, 2)));
+		System.out.println("Insert operation successful");
+		
 		System.out.println("--FindAll--");
 		sellerDao.findAll().stream().forEach(System.out::println);
-		
+		System.out.println();
 	}
 
 }
