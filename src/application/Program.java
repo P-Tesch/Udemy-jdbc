@@ -3,7 +3,6 @@ package application;
 import dao.DaoFactory;
 import dao.SellerDao;
 import entities.Department;
-import entities.Seller;
 
 public class Program {
 
@@ -17,15 +16,11 @@ public class Program {
 		
 		Department department = new Department(null, 2);
 		System.out.println("--FindByDepartment = " + department + "--");
-		for (Seller seller : sellerDao.findByDepartment(department)) {
-			System.out.println(seller);
-		}
+		sellerDao.findByDepartment(department).stream().forEach(System.out::println);
 		System.out.println();
 		
 		System.out.println("--FindAll--");
-		for (Seller seller : sellerDao.findAll()) {
-			System.out.println(seller);
-		}
+		sellerDao.findAll().stream().forEach(System.out::println);
 		
 	}
 
