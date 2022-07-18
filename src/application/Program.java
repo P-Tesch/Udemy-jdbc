@@ -1,16 +1,12 @@
 package application;
 
-import java.util.Date;
-
 import dao.DaoFactory;
-import dao.SellerDao;
-import entities.Department;
-import entities.Seller;
+import dao.DepartmentDao;
 
 public class Program {
 
 	public static void main(String[] args) {
-		
+		/*
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
 		System.out.println("--FindById = 1--");
@@ -39,6 +35,17 @@ public class Program {
 		Department department = new Department(null, 1);
 		System.out.println("--FindByDepartment = " + department + "--");
 		sellerDao.findByDepartment(department).stream().forEach(System.out::println);
+		System.out.println();
+		*/
+		
+		DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
+		
+		System.out.println("--Find All--");
+		departmentDao.findAll().stream().forEach(System.out::println);
+		System.out.println();
+		
+		System.out.println("--Find by Id = 1--");
+		System.out.println(departmentDao.findById(1));
 		System.out.println();
 	}
 
