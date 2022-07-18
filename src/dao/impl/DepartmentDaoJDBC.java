@@ -1,9 +1,11 @@
 package dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +24,74 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
 	@Override
 	public void insert(Department department) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"INSERT INTO department "
+				+ "(Name) "
+				+ "VALUES "
+				+ "(?)"
+				, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, department.getName());
+			
+			int success = st.executeUpdate();
+			if (success > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					department.setId(rs.getInt(1));
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Data insertion unsuccessful");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public void update(Department department) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"UPDATE department "
+				+ "SET Name = ? "
+				+ "WHERE Id = ?");
+			st.setString(1, department.getName());
+			st.setInt(2, department.getId());
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+				"DELETE FROM department "
+				+ "WHERE Id = ?");
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
