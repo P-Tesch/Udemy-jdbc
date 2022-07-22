@@ -1,9 +1,9 @@
-package dao;
+package db.dao;
 
 import java.util.List;
 
-import entities.Department;
-import entities.Seller;
+import model.entities.Department;
+import model.entities.Seller;
 
 public interface SellerDao {
 	void insert(Seller seller);

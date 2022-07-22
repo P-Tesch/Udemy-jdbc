@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Program;
 import gui.util.Alerts;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.DepartmentService;
 
 public class MainViewController implements Initializable {
 	
@@ -32,12 +34,15 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemSellerAction() {
-		System.out.println("a");
+		this.loadView(null, x -> {});
 	}
 	
 	@FXML
 	public void onMenuItemDepartmentAction() {
-		this.loadView("/gui/DepartmentView.fxml");
+		this.loadView("/gui/DepartmentView.fxml", (DepartmentViewController controller) -> {
+			controller.setDepartmentService(new DepartmentService());
+			controller.updateTableViewDepartment();
+		});
 	}
 	
 	@FXML
@@ -47,12 +52,15 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onButtonSellerAction() {
-		this.loadView(null);
+		this.loadView(null, x -> {});
 	}
 	
 	@FXML
 	public void onButtonDepartmentAction() {
-		this.loadView("/gui/DepartmentView.fxml");
+		this.loadView("/gui/DepartmentView.fxml", (DepartmentViewController controller) -> {
+			controller.setDepartmentService(new DepartmentService());
+			controller.updateTableViewDepartment();
+		});
 	}
 
 
@@ -60,9 +68,10 @@ public class MainViewController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 	}
 	
-	private synchronized void loadView(String viewPath) {
+	private synchronized <T> void loadView(String viewPath, Consumer<T> initializationFunction) {
 		try {
-			VBox toLoadVbox = FXMLLoader.load(getClass().getResource(viewPath));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(viewPath));
+			VBox toLoadVbox = loader.load();
 			Scene mainScene = Program.getMainScene();
 			VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 			Node headerMenu = mainVbox.getChildren().get(0);
@@ -70,10 +79,12 @@ public class MainViewController implements Initializable {
 			mainVbox.getChildren().clear();
 			mainVbox.getChildren().add(headerMenu);
 			mainVbox.getChildren().addAll(toLoadVbox.getChildren());
+			
+			initializationFunction.accept(loader.getController());
 		}
 		catch (IOException e) {
-			
+			Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
-
 }
