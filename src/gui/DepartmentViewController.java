@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Program;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-public class DepartmentViewController implements Initializable {
+public class DepartmentViewController implements Initializable, DataChangeListener {
 	
 	private DepartmentService departmentService;
 	private ObservableList<Department> departmentList;
@@ -47,7 +48,7 @@ public class DepartmentViewController implements Initializable {
 	
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
-		this.createNewDepartmentFormView("/gui/NewDepartmentFormView.fxml", Utils.currentStage(event));
+		this.createDepartmentFormView(new Department(), "/gui/DepartmentFormView.fxml", Utils.currentStage(event));
 	}
 	
 	public void setDepartmentService(DepartmentService departmentService) {
@@ -69,10 +70,15 @@ public class DepartmentViewController implements Initializable {
 		this.tableViewDepartment.setItems(departmentList);
 	}
 	
-	private void createNewDepartmentFormView(String viewPath, Stage parentStage) {
+	private void createDepartmentFormView(Department department, String viewPath, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(viewPath));
 			Pane pane = loader.load();
+			
+			DepartmentFormViewController controller = loader.getController();
+			controller.setDepartment(department);
+			controller.setDepartmentService(this.departmentService);
+			controller.insertDataChangeListener(this);
 			
 			Stage formStage = new Stage();
 			formStage.setTitle("Enter department data");
@@ -85,5 +91,10 @@ public class DepartmentViewController implements Initializable {
 		catch (IOException e) {
 			Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChange() {
+		this.updateTableViewDepartment();
 	}
 }

@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="119.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="119.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentFormViewController">
    <children>
       <GridPane prefHeight="127.0" prefWidth="437.0">
         <columnConstraints>
@@ -34,15 +33,15 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="textFieldName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox prefHeight="119.0" prefWidth="241.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Confirm" />
-                  <Button mnemonicParsing="false" text="Cancel" />
-                  <Label textFill="RED" />
+                  <Button fx:id="buttonConfirm" mnemonicParsing="false" onAction="#onButtonConfirmAction" text="Confirm" />
+                  <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#onButtonCancelAction" text="Cancel" />
+                  <Label fx:id="labelError" textFill="RED" />
                </children>
             </HBox>
-            <Label text="Automatic" GridPane.columnIndex="1" />
+            <Label fx:id="labelId" text="Automatic" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

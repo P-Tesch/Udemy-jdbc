@@ -2,26 +2,30 @@ package model.services;
 
 import java.util.List;
 
-import db.DbException;
 import db.dao.DaoFactory;
 import db.dao.DepartmentDao;
 import model.entities.Department;
+import model.exceptions.ModelException;
 
 public class DepartmentService {
 
 	DepartmentDao dao = DaoFactory.createDepartmentDao();
 	
-	public void insert(Department department) {
+	public void insertOrUpdate(Department department) {
+		if (department.getName() == null || department.getName().isEmpty() || department.getName().isBlank()) {
+			throw new ModelException("Department must have a name");
+		}
 		for (Department nameCheck : this.findAll()) {
-			if (nameCheck.getName() == department.getName()) {
-				throw new DbException("Department already exists");
+			if (nameCheck.getName().equalsIgnoreCase(department.getName())) {
+				throw new ModelException("Department already exists");
 			}
 		}
-		dao.insert(department);
-	}
-	
-	public void update(Department department) {
-		dao.update(department);
+		if (department.getId() == null) {
+			dao.insert(department);
+		}
+		else {
+			dao.update(department);
+		}
 	}
 	
 	public void deleteById(Integer id) {
