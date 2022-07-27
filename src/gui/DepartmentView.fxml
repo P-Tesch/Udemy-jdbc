@@ -29,7 +29,7 @@
             <Button fx:id="buttonDelete" mnemonicParsing="false" text="Delete" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDepartment" prefHeight="224.0" prefWidth="600.0">
+      <TableView fx:id="tableViewDepartment" onMouseClicked="#onTableViewMouseClicked" prefHeight="224.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="tableColumnName" prefWidth="524.0" text="Name" />

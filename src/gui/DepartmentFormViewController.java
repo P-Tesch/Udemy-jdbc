@@ -86,7 +86,7 @@ public class DepartmentFormViewController implements Initializable {
 		this.departmentService = departmentService;
 	}
 	
-	public void insertDataChangeListener(DataChangeListener listener) {
+	public void addDataChangeListener(DataChangeListener listener) {
 		this.dataChangeListeners.add(listener);
 	}
 	

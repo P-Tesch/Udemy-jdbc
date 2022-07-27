@@ -17,9 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -78,7 +83,7 @@ public class DepartmentViewController implements Initializable, DataChangeListen
 			DepartmentFormViewController controller = loader.getController();
 			controller.setDepartment(department);
 			controller.setDepartmentService(this.departmentService);
-			controller.insertDataChangeListener(this);
+			controller.addDataChangeListener(this);
 			
 			Stage formStage = new Stage();
 			formStage.setTitle("Enter department data");
@@ -96,5 +101,16 @@ public class DepartmentViewController implements Initializable, DataChangeListen
 	@Override
 	public void onDataChange() {
 		this.updateTableViewDepartment();
+	}
+	
+	@FXML
+	public void onTableViewMouseClicked(MouseEvent event) {
+		Department department = this.tableViewDepartment.getSelectionModel().getSelectedItem();		
+		if (department != null 
+			&& event.getButton() == MouseButton.PRIMARY 
+			&& event.getClickCount() == 2 
+			&& !(event.getTarget() instanceof TableColumnHeader)) {
+				this.createDepartmentFormView(department, "/gui/DepartmentFormView.fxml", Utils.currentStage(event));
+		}
 	}
 }
