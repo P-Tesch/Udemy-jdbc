@@ -28,8 +28,8 @@ public class DepartmentService {
 		}
 	}
 	
-	public void deleteById(Integer id) {
-		dao.deleteById(id);
+	public void delete(Department department) {
+		dao.deleteById(department.getId());
 	}
 	
 	public Department findById(Integer id) {

@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import db.DbException;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
@@ -37,10 +39,10 @@ public class DepartmentFormViewController implements Initializable {
 	Button buttonCancel;
 	
 	@FXML
-	Label labelId;
+	Button buttonDelete;
 	
 	@FXML
-	Label labelError;
+	Label labelId;
 	
 	@FXML
 	public void onButtonConfirmAction(ActionEvent event) {
@@ -69,6 +71,27 @@ public class DepartmentFormViewController implements Initializable {
 	public void onButtonCancelAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
+	
+	@FXML
+	public void onButtonDeleteAction(ActionEvent event) {
+		if (this.department == null) {
+			throw new IllegalStateException("Department is null");
+		}
+		if (this.departmentService == null) {
+			throw new IllegalStateException("DepartmentService is null");
+		}
+		try {
+			Optional<ButtonType> choice = Alerts.showConfirmation("Deletion", "Are you sure you want to delete the department " + this.department.getName() + "?");
+			if (choice.get() == ButtonType.OK) {
+				departmentService.delete(department);
+				this.notifyDataChangeListeners();
+				Utils.currentStage(event).close();
+			}
+		}
+		catch (DbException e) {
+			Alerts.showAlert("Db error", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -78,8 +101,9 @@ public class DepartmentFormViewController implements Initializable {
 	
 	public void setDepartment(Department department) {
 		this.department = department;
-		labelId.setText((department.getId() == null) ? "Automatic" : String.valueOf(department.getId()));
-		textFieldName.setText(department.getName());
+		this.labelId.setText((department.getId() == null) ? "Automatic" : String.valueOf(department.getId()));
+		this.textFieldName.setText(department.getName());
+		this.buttonDelete.setVisible(!(department.getId() == null));
 	}
 	
 	public void setDepartmentService(DepartmentService departmentService) {

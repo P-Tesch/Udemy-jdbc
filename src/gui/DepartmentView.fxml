@@ -26,7 +26,6 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button fx:id="buttonDelete" mnemonicParsing="false" text="Delete" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewDepartment" onMouseClicked="#onTableViewMouseClicked" prefHeight="224.0" prefWidth="600.0">

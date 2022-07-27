@@ -38,7 +38,7 @@
                <children>
                   <Button fx:id="buttonConfirm" mnemonicParsing="false" onAction="#onButtonConfirmAction" text="Confirm" />
                   <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#onButtonCancelAction" text="Cancel" />
-                  <Label fx:id="labelError" textFill="RED" />
+                  <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#onButtonDeleteAction" text="Delete" />
                </children>
             </HBox>
             <Label fx:id="labelId" text="Automatic" GridPane.columnIndex="1" />

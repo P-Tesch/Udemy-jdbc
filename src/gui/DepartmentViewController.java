@@ -40,9 +40,6 @@ public class DepartmentViewController implements Initializable, DataChangeListen
 	private Button buttonNew;
 	
 	@FXML
-	private Button buttonDelete;
-	
-	@FXML
 	private TableView<Department> tableViewDepartment;
 	
 	@FXML
