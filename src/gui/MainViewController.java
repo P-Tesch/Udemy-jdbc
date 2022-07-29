@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 	
@@ -34,15 +35,12 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemSellerAction() {
-		this.loadView(null, x -> {});
+		this.loadSellerView();
 	}
 	
 	@FXML
 	public void onMenuItemDepartmentAction() {
-		this.loadView("/gui/DepartmentView.fxml", (DepartmentViewController controller) -> {
-			controller.setDepartmentService(new DepartmentService());
-			controller.updateTableViewDepartment();
-		});
+		this.loadDepartmentView();
 	}
 	
 	@FXML
@@ -52,20 +50,31 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onButtonSellerAction() {
-		this.loadView(null, x -> {});
+		this.loadSellerView();
 	}
 	
 	@FXML
 	public void onButtonDepartmentAction() {
-		this.loadView("/gui/DepartmentView.fxml", (DepartmentViewController controller) -> {
-			controller.setDepartmentService(new DepartmentService());
-			controller.updateTableViewDepartment();
-		});
+		this.loadDepartmentView();
 	}
 
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+	}
+	
+	private void loadDepartmentView() {
+		this.loadView("/gui/DepartmentView.fxml", (DepartmentViewController controller) -> {
+			controller.setDepartmentService(new DepartmentService());
+			controller.updateTableViewDepartment();
+		});
+	}
+	
+	private void loadSellerView() {
+		this.loadView("/gui/SellerView.fxml", (SellerViewController controller) -> {
+			controller.setSellerService(new SellerService());
+			controller.updateTableViewSeller();
+		});
 	}
 	
 	private synchronized <T> void loadView(String viewPath, Consumer<T> initializationFunction) {

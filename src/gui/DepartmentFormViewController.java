@@ -92,18 +92,12 @@ public class DepartmentFormViewController implements Initializable {
 			Alerts.showAlert("Db error", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		Constraints.setTextFieldMaxLength(textFieldName, 30);
-		this.dataChangeListeners = new ArrayList<>();
-	}
 	
 	public void setDepartment(Department department) {
 		this.department = department;
 		this.labelId.setText((department.getId() == null) ? "Automatic" : String.valueOf(department.getId()));
 		this.textFieldName.setText(department.getName());
-		this.buttonDelete.setVisible(!(department.getId() == null));
+		this.buttonDelete.setVisible(department.getId() != null);
 	}
 	
 	public void setDepartmentService(DepartmentService departmentService) {
@@ -112,6 +106,12 @@ public class DepartmentFormViewController implements Initializable {
 	
 	public void addDataChangeListener(DataChangeListener listener) {
 		this.dataChangeListeners.add(listener);
+	}
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		Constraints.setTextFieldMaxLength(textFieldName, 30);
+		this.dataChangeListeners = new ArrayList<>();
 	}
 	
 	private void notifyDataChangeListeners() {
