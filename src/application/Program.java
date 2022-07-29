@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 
+import gui.MainViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ public class Program extends Application {
 			mainScene = new Scene(scrollPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("JDBC + JavaFX test application");
+			MainViewController controller = loader.getController();
+			controller.resizePanes();
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

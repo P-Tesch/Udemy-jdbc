@@ -112,6 +112,7 @@ public class SellerViewController implements Initializable, DataChangeListener {
 		}
 		this.sellerList = FXCollections.observableArrayList(sellerService.findAll());
 		this.tableViewSeller.setItems(sellerList);
+		this.tableViewSeller.refresh();
 	}
 	
 	private void createSellerFormView(Seller seller, String viewPath, Stage parentStage) {

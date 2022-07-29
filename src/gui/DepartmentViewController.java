@@ -88,6 +88,7 @@ public class DepartmentViewController implements Initializable, DataChangeListen
 		}
 		this.departmentList = FXCollections.observableArrayList(departmentService.findAll());
 		this.tableViewDepartment.setItems(departmentList);
+		this.tableViewDepartment.refresh();
 	}
 	
 	private void createDepartmentFormView(Department department, String viewPath, Stage parentStage) {

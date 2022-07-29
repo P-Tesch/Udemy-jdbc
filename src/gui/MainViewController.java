@@ -16,7 +16,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.services.DepartmentService;
 import model.services.SellerService;
 
@@ -24,14 +26,24 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private MenuItem menuItemSeller;
+	
 	@FXML
 	private MenuItem menuItemDepartment;
+	
 	@FXML
 	private MenuItem menuItemAbout;
+	
 	@FXML
 	private Button buttonSeller;
+	
 	@FXML
 	private Button buttonDepartment;
+	
+	@FXML
+	private VBox vBoxMain;
+	
+	@FXML
+	private GridPane gridPaneButtons;
 	
 	@FXML
 	public void onMenuItemSellerAction() {
@@ -58,9 +70,15 @@ public class MainViewController implements Initializable {
 		this.loadDepartmentView();
 	}
 
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+	}
+	
+	public void resizePanes() {
+		this.gridPaneButtons.prefWidthProperty().bind(( (Stage) Program.getMainScene().getWindow()).widthProperty());
+		this.gridPaneButtons.prefHeightProperty().bind(( (Stage) Program.getMainScene().getWindow()).heightProperty());
+		this.vBoxMain.prefWidthProperty().bind(( (Stage) Program.getMainScene().getWindow()).widthProperty());
+		this.vBoxMain.prefHeightProperty().bind(( (Stage) Program.getMainScene().getWindow()).heightProperty());
 	}
 	
 	private void loadDepartmentView() {
